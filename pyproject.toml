@@ -3,7 +3,7 @@ name = "unitcore"
 version = "0.1.0"
 description = ""
 authors = ["Демид Максим Сергеевич <demid.maksim@gmai.com>"]
-readme = "README.md"
+readme = "readme.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"

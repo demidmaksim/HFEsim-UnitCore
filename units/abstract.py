@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
-pass
+import numpy as np
 
 if TYPE_CHECKING:
     pass
 
 
 class AbstractParam:
-    pass
+    value: Union[np.ndarray, int, float]

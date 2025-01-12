@@ -28,7 +28,7 @@ class Solubility(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: SolubilityUnit = SolubilityUnit.is_m3_per_m3,
+        unit: SolubilityUnit = SolubilityUnit.m3_per_m3,
     ):
         if unit.is_m3_per_m3():
             pass
@@ -40,7 +40,7 @@ class Solubility(AbstractParam):
 
         self.value = value
 
-    def si(self) -> Union[np.ndarray, int, float]:
+    def m3_per_m3(self) -> Union[np.ndarray, int, float]:
         return self.value
 
     def foot_per_barrel(self) -> Union[np.ndarray, int, float]:

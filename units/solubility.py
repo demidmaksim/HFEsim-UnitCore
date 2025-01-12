@@ -12,11 +12,11 @@ if TYPE_CHECKING:
 
 
 class SolubilityUnit(StrEnum):
-    SI = "м3/м3"
+    m3_per_m3 = "м3/м3"
     Foot_per_barrel = "Foot_per_barrel"
 
-    def is_si(self) -> bool:
-        return self == self.SI
+    def is_m3_per_m3(self) -> bool:
+        return self == self.m3_per_m3
 
     def is_foot_per_barrel(self) -> bool:
         return self == self.Foot_per_barrel
@@ -28,9 +28,9 @@ class Solubility(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: SolubilityUnit = SolubilityUnit.is_si,
+        unit: SolubilityUnit = SolubilityUnit.is_m3_per_m3,
     ):
-        if unit.is_si():
+        if unit.is_m3_per_m3():
             pass
         elif unit.is_foot_per_barrel():
             value = value / self.__foot_per_barrel

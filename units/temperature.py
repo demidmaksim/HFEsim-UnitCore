@@ -47,6 +47,9 @@ class Temperature(AbstractParam):
 
         self.value = value
 
+    def celsius(self) -> float:
+        return self.value
+
     def fahrenheit(self) -> Union[np.ndarray, int, float]:
         results = 1.8 * (self.value - self.__celsius_coefficient) + 32
         return results

@@ -49,7 +49,7 @@ class Temperature(AbstractParam):
             value = value - 32
             value = value / 1.8
         else:
-            raise ValueError("Неизвестная еденица измерения давления")
+            raise ValueError("Неизвестная еденица измерения температуры")
 
         self.value = value
 
@@ -62,3 +62,17 @@ class Temperature(AbstractParam):
 
     def kelvin(self) -> Union[np.ndarray, int, float]:
         return self.value
+
+    def get(self, unit: Union[AbstractUnit, FamousTempUnit]) -> Union[np.ndarray, int, float]:
+
+        if isinstance(unit, str):
+            unit = TempUnit.from_string(unit)
+
+        if unit.is_kelvin():
+            return self.kelvin()
+        elif unit.is_celsius():
+            return self.celsius()
+        elif unit.is_fahrenheit():
+            return self.fahrenheit()
+        else:
+            raise ValueError("Неизвестная еденица измерения температуры")

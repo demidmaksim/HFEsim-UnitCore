@@ -88,3 +88,32 @@ class Pressure(AbstractParam):
 
     def pa(self) -> Union[np.ndarray, int, float]:
         return self.value
+
+    def mpa(self) -> Union[np.ndarray, int, float]:
+        return self.value / 10**6
+
+    def at(self) -> Union[np.ndarray, int, float]:
+        return self.value / 98066.5
+
+    def atm(self) -> Union[np.ndarray, int, float]:
+        return self.value / 101325
+
+    def get(self, unit: Union[AbstractUnit, FamousPresUnit]) -> Union[np.ndarray, int, float]:
+
+        if isinstance(unit, str):
+            unit = PresUnit.from_string(unit)
+
+        if unit.is_bar():
+            return self.bar()
+        elif unit.is_psi():
+            return self.psi()
+        elif unit.is_pascal():
+            return self.pa()
+        elif unit.is_mega_pascal():
+            return self.mpa()
+        elif unit.is_at():
+            return self.at()
+        elif unit.is_atm():
+            return self.atm()
+        else:
+            raise ValueError("Неизвестная еденица измерения давления")

@@ -24,7 +24,7 @@ class Mass(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: MassUnit = MassUnit.kg,
+        unit: Union[MassUnit, FamousMassUnit] = MassUnit.kg,
     ) -> None:
 
         if isinstance(unit, str):
@@ -39,3 +39,16 @@ class Mass(AbstractParam):
 
     def kg(self) -> Union[np.ndarray, int, float]:
         return self.value
+
+    def get(self, unit: Union[AbstractUnit, FamousMassUnit]) -> Union[np.ndarray, int, float]:
+
+        if isinstance(unit, str):
+            unit = MassUnit.from_string(unit)
+
+        if isinstance(unit, str):
+            unit = MassUnit.from_string(unit)
+
+        if unit.is_kg():
+            return self.kg()
+        else:
+            raise ValueError("Неизвестная еденица измерения Массы")

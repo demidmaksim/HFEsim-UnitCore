@@ -52,3 +52,16 @@ class Solubility(AbstractParam):
 
     def foot_per_barrel(self) -> Union[np.ndarray, int, float]:
         return self.value * self.__foot_per_barrel
+
+    def get(self, unit: Union[AbstractUnit, FamousSolubilityUnit]) -> Union[np.ndarray, int, float]:
+
+        if isinstance(unit, str):
+            unit = SolubilityUnit.from_string(unit)
+
+        if unit.is_m3_per_m3():
+            return self.m3_per_m3()
+        elif unit.is_foot_per_barrel():
+            return self.foot_per_barrel()
+        else:
+            msg = "Неизвестная еденица измерения газосодержания"
+            raise ValueError(msg)

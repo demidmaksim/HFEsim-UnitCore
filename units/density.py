@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
@@ -14,7 +13,7 @@ if TYPE_CHECKING:
 FamousDensityUnit = Literal["kg_per_m3", "relative", "api"]
 
 
-class DensityUnit(StrEnum):
+class DensityUnit(AbstractUnit):
     kg_per_m3 = "kg_per_m3"
     relative = "relative"
     api = "api"
@@ -27,15 +26,6 @@ class DensityUnit(StrEnum):
 
     def is_api(self) -> bool:
         return self == self.api
-
-    @classmethod
-    def from_string(cls, value: FamousDensityUnit) -> DensityUnit:
-        data = {
-            "kg_per_m3": cls.kg_per_m3,
-            "relative": cls.relative,
-            "api": cls.api,
-        }
-        return data[value]
 
 
 class Density(AbstractParam):

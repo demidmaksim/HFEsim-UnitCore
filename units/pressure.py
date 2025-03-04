@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
@@ -14,7 +13,7 @@ if TYPE_CHECKING:
 FamousPresUnit = Literal["Bar", "Pascal", "MegaPascal", "At", "atm", "psi"]
 
 
-class PresUnit(StrEnum):
+class PresUnit(AbstractUnit):
     Bar = "Bar"
     Pa = "Pascal"
     MPa = "MegaPascal"
@@ -39,18 +38,6 @@ class PresUnit(StrEnum):
 
     def is_psi(self) -> bool:
         return self == self.psi
-
-    @classmethod
-    def from_string(cls, value: FamousPresUnit) -> PresUnit:
-        data = {
-            "Bar": cls.Bar,
-            "Pascal": cls.Pa,
-            "MegaPascal": cls.MPa,
-            "At": cls.At,
-            "atm": cls.atm,
-            "psi": cls.psi,
-        }
-        return data[value]
 
 
 class Pressure(AbstractParam):

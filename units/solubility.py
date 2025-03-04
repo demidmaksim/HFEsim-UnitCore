@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
@@ -14,7 +14,7 @@ if TYPE_CHECKING:
 FamousSolubilityUnit = Literal["м3/м3", "Foot_per_barrel"]
 
 
-class SolubilityUnit(StrEnum):
+class SolubilityUnit(AbstractUnit):
     m3_per_m3 = "м3/м3"
     Foot_per_barrel = "Foot_per_barrel"
 
@@ -23,14 +23,6 @@ class SolubilityUnit(StrEnum):
 
     def is_foot_per_barrel(self) -> bool:
         return self == self.Foot_per_barrel
-
-    @classmethod
-    def from_string(cls, value: FamousSolubilityUnit) -> SolubilityUnit:
-        data = {
-            "м3/м3": cls.m3_per_m3,
-            "Foot_per_barrel": cls.Foot_per_barrel,
-        }
-        return data[value]
 
 
 class Solubility(AbstractParam):

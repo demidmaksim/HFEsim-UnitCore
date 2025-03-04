@@ -1,31 +1,23 @@
 from __future__ import annotations
 
-from enum import StrEnum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
-    from typing import Union, Literal
+    from typing import Union
 
 
 FamousMassUnit = Literal["kg"]
 
 
-class MassUnit(StrEnum):
+class MassUnit(AbstractUnit):
     kg = "kg"
 
     def is_kg(self) -> bool:
         return self == self.kg
-
-    @classmethod
-    def from_string(cls, value: FamousMassUnit) -> MassUnit:
-        data = {
-            "kg": cls.kg,
-        }
-        return data[value]
 
 
 class Mass(AbstractParam):

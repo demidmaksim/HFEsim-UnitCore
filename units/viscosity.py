@@ -1,20 +1,19 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
 
 
-FamousViscUnit = Literal["CentiPoise", "Newton_second", "Fahrenheit"]
+FamousViscUnit = Literal["CentiPoise", "Newton_second"]
 
 
-class ViscUnit(StrEnum):
+class ViscUnit(AbstractUnit):
     cP = "CentiPoise"
     Newton = "Newton_second"
 
@@ -23,14 +22,6 @@ class ViscUnit(StrEnum):
 
     def is_newton(self) -> bool:
         return self == self.Newton
-
-    @classmethod
-    def from_string(cls, value: FamousViscUnit) -> ViscUnit:
-        data = {
-            "CentiPoise": cls.cP,
-            "Newton_second": cls.Newton,
-        }
-        return data[value]
 
 
 class Viscosity(AbstractParam):

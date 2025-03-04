@@ -1,8 +1,8 @@
-from .density import Density, DensityUnit
-from .pressure import Pressure, PresUnit
-from .solubility import Solubility, SolubilityUnit
-from .temperature import Temperature, TempUnit
-from .viscosity import Viscosity, ViscUnit
-from .volume_factor import VolumeFactor, VolumeFactorUnit
-from .mass import Mass, MassUnit
-from .volume import VolumeUnit, Volume
+from .density import Density, DensityUnit, FamousDensityUnit
+from .pressure import Pressure, PresUnit, FamousPresUnit
+from .solubility import Solubility, SolubilityUnit, FamousSolubilityUnit
+from .temperature import Temperature, TempUnit, FamousTempUnit
+from .viscosity import Viscosity, ViscUnit, FamousViscUnit
+from .volume_factor import VolumeFactor, VolumeFactorUnit, FamousVolumeFactorUnit
+from .mass import Mass, MassUnit, FamousMassUnit
+from .volume import VolumeUnit, Volume, FamousVolumeUnit

@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
@@ -14,7 +13,7 @@ if TYPE_CHECKING:
 FamousTempUnit = Literal["Kelvin", "Celsius", "Fahrenheit"]
 
 
-class TempUnit(StrEnum):
+class TempUnit(AbstractUnit):
     Kelvin = "Kelvin"
     Celsius = "Celsius"
     Fahrenheit = "Fahrenheit"
@@ -27,15 +26,6 @@ class TempUnit(StrEnum):
 
     def is_fahrenheit(self) -> bool:
         return self == self.Fahrenheit
-
-    @classmethod
-    def from_string(cls, value: FamousTempUnit) -> TempUnit:
-        data = {
-            "Kelvin": cls.Kelvin,
-            "Celsius": cls.Celsius,
-            "Fahrenheit": cls.Fahrenheit,
-        }
-        return data[value]
 
 
 class Temperature(AbstractParam):

@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
@@ -14,18 +13,11 @@ if TYPE_CHECKING:
 FamousVolumeUnit = Literal["m3"]
 
 
-class VolumeUnit(StrEnum):
+class VolumeUnit(AbstractUnit):
     m3 = "m3"
 
     def is_m3(self) -> bool:
         return self == self.m3
-
-    @classmethod
-    def from_string(cls, value: FamousVolumeUnit) -> VolumeUnit:
-        data = {
-            "m3": cls.m3,
-        }
-        return data[value]
 
 
 class Volume(AbstractParam):

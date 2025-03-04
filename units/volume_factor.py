@@ -1,37 +1,29 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam
+from units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
 
-FamousVolumeUnit = Literal["si"]
+FamousVolumeFactorUnit = Literal["si"]
 
 
-class VolumeFactorUnit(StrEnum):
+class VolumeFactorUnit(AbstractUnit):
     si = "si"
 
     def is_si(self) -> bool:
         return self == self.si
-
-    @classmethod
-    def from_string(cls, value: FamousVolumeUnit) -> VolumeFactorUnit:
-        data = {
-            "si": cls.si,
-        }
-        return data[value]
 
 
 class VolumeFactor(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: Union[VolumeFactorUnit, FamousVolumeUnit] = VolumeFactorUnit.si,
+        unit: Union[VolumeFactorUnit, FamousVolumeFactorUnit] = VolumeFactorUnit.si,
     ):
 
         if isinstance(unit, str):

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
@@ -9,6 +9,9 @@ from units.abstract import AbstractParam
 
 if TYPE_CHECKING:
     from typing import Union
+
+
+FamousTempUnit = Literal["Kelvin", "Celsius", "Fahrenheit"]
 
 
 class TempUnit(StrEnum):
@@ -25,6 +28,15 @@ class TempUnit(StrEnum):
     def is_fahrenheit(self) -> bool:
         return self == self.Fahrenheit
 
+    @classmethod
+    def from_string(cls, value: FamousTempUnit) -> TempUnit:
+        data = {
+            "Kelvin": cls.Kelvin,
+            "Celsius": cls.Celsius,
+            "Fahrenheit": cls.Fahrenheit,
+        }
+        return data[value]
+
 
 class Temperature(AbstractParam):
     __celsius_coefficient = 273.15
@@ -32,8 +44,12 @@ class Temperature(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: TempUnit = TempUnit.Celsius,
+        unit: Union[TempUnit, FamousTempUnit] = TempUnit.Celsius,
     ):
+
+        if isinstance(unit, str):
+            unit = TempUnit.from_string(unit)
+
         if unit.is_kelvin():
             pass
         elif unit.is_celsius():

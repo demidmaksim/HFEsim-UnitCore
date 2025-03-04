@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
@@ -9,6 +9,9 @@ from units.abstract import AbstractParam
 
 if TYPE_CHECKING:
     from typing import Union
+
+
+FamousViscUnit = Literal["CentiPoise", "Newton_second", "Fahrenheit"]
 
 
 class ViscUnit(StrEnum):
@@ -21,6 +24,14 @@ class ViscUnit(StrEnum):
     def is_newton(self) -> bool:
         return self == self.Newton
 
+    @classmethod
+    def from_string(cls, value: FamousViscUnit) -> ViscUnit:
+        data = {
+            "CentiPoise": cls.cP,
+            "Newton_second": cls.Newton,
+        }
+        return data[value]
+
 
 class Viscosity(AbstractParam):
     __cp_coefficient = 10**-3
@@ -28,8 +39,12 @@ class Viscosity(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: ViscUnit = ViscUnit.cP,
+        unit: Union[ViscUnit, FamousViscUnit] = ViscUnit.cP,
     ):
+
+        if isinstance(unit, str):
+            unit = ViscUnit.from_string(unit)
+
         if unit.is_newton():
             pass
         if unit.is_cp():

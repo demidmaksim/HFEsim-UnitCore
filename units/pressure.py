@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
@@ -9,6 +9,9 @@ from units.abstract import AbstractParam
 
 if TYPE_CHECKING:
     from typing import Union
+
+
+FamousPresUnit = Literal["Bar", "Pascal", "MegaPascal", "At", "atm", "psi"]
 
 
 class PresUnit(StrEnum):
@@ -37,6 +40,18 @@ class PresUnit(StrEnum):
     def is_psi(self) -> bool:
         return self == self.psi
 
+    @classmethod
+    def from_string(cls, value: FamousPresUnit) -> PresUnit:
+        data = {
+            "Bar": cls.Bar,
+            "Pascal": cls.Pa,
+            "MegaPascal": cls.MPa,
+            "At": cls.At,
+            "atm": cls.atm,
+            "psi": cls.psi,
+        }
+        return data[value]
+
 
 class Pressure(AbstractParam):
     __psi_coefficient = 6894.76
@@ -45,8 +60,12 @@ class Pressure(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: PresUnit = PresUnit.atm,
+        unit: Union[PresUnit, FamousPresUnit] = PresUnit.atm,
     ):
+
+        if isinstance(unit, str):
+            unit = PresUnit.from_string(unit)
+
         if unit.is_bar():
             value = value * self.__bar_coefficient
         elif unit.is_psi():

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from enum import StrEnum
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
@@ -9,6 +9,9 @@ from units.abstract import AbstractParam
 
 if TYPE_CHECKING:
     from typing import Union
+
+
+FamousSolubilityUnit = Literal["м3/м3", "Foot_per_barrel"]
 
 
 class SolubilityUnit(StrEnum):
@@ -21,6 +24,14 @@ class SolubilityUnit(StrEnum):
     def is_foot_per_barrel(self) -> bool:
         return self == self.Foot_per_barrel
 
+    @classmethod
+    def from_string(cls, value: FamousSolubilityUnit) -> SolubilityUnit:
+        data = {
+            "м3/м3": cls.m3_per_m3,
+            "Foot_per_barrel": cls.Foot_per_barrel,
+        }
+        return data[value]
+
 
 class Solubility(AbstractParam):
     __foot_per_barrel = 0.17810760667903522
@@ -28,8 +39,12 @@ class Solubility(AbstractParam):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: SolubilityUnit = SolubilityUnit.m3_per_m3,
+        unit: Union[SolubilityUnit, FamousSolubilityUnit] = SolubilityUnit.m3_per_m3,
     ):
+
+        if isinstance(unit, str):
+            unit = SolubilityUnit.from_string(unit)
+
         if unit.is_m3_per_m3():
             pass
         elif unit.is_foot_per_barrel():

@@ -37,6 +37,10 @@ class Volume(AbstractParam):
 
         self.value = value
 
+    @staticmethod
+    def default_unit() -> VolumeUnit:
+        return VolumeUnit.m3
+
     def m3(self) -> Union[np.ndarray, int, float]:
         return self.value
 

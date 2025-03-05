@@ -51,6 +51,10 @@ class Density(AbstractParam):
         self.__relative_coefficient = relative_coefficient
         self.value = value
 
+    @staticmethod
+    def default_unit() -> DensityUnit:
+        return DensityUnit.kg_per_m3
+
     def relative(self) -> Union[np.ndarray, int, float]:
         return self.value / self.__relative_coefficient
 

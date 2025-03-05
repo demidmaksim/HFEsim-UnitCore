@@ -45,6 +45,10 @@ class Viscosity(AbstractParam):
 
         self.value = value
 
+    @staticmethod
+    def default_unit() -> ViscUnit:
+        return ViscUnit.Newton
+
     def newton(self) -> Union[np.ndarray, int, float]:
         return self.value
 

@@ -37,6 +37,10 @@ class Mass(AbstractParam):
 
         self.value = value
 
+    @staticmethod
+    def default_unit() -> MassUnit:
+        return MassUnit.kg
+
     def kg(self) -> Union[np.ndarray, int, float]:
         return self.value
 

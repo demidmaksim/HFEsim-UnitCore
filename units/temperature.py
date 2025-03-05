@@ -53,6 +53,10 @@ class Temperature(AbstractParam):
 
         self.value = value
 
+    @staticmethod
+    def default_unit() -> TempUnit:
+        return TempUnit.Kelvin
+
     def celsius(self) -> float:
         return self.value
 

@@ -80,6 +80,10 @@ class Pressure(AbstractParam):
         value = 0.1 * 10**6
         return Pressure(value, PresUnit.Pa)
 
+    @staticmethod
+    def default_unit() -> PresUnit:
+        return PresUnit.Pa
+
     def psi(self) -> Union[np.ndarray, int, float]:
         return self.value / self.__psi_coefficient
 

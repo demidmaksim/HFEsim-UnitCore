@@ -37,6 +37,10 @@ class VolumeFactor(AbstractParam):
 
         self.value = value
 
+    @staticmethod
+    def default_unit() -> VolumeFactorUnit:
+        return VolumeFactorUnit.si
+
     def si(self) -> Union[np.ndarray, int, float]:
         return self.value
 

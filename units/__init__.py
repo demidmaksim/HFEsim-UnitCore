@@ -6,3 +6,4 @@ from .viscosity import Viscosity, ViscUnit, FamousViscUnit
 from .volume_factor import VolumeFactor, VolumeFactorUnit, FamousVolumeFactorUnit
 from .mass import Mass, MassUnit, FamousMassUnit
 from .volume import VolumeUnit, Volume, FamousVolumeUnit
+from .abstract import AbstractParam, AbstractUnit

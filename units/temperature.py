@@ -57,17 +57,17 @@ class Temperature(AbstractParam):
     def default_unit() -> TempUnit:
         return TempUnit.Kelvin
 
-    def celsius(self) -> float:
+    def celsius(self) -> np.ndarray:
         return self.value
 
-    def fahrenheit(self) -> Union[np.ndarray, int, float]:
+    def fahrenheit(self) -> np.ndarray:
         results = 1.8 * (self.value - self.__celsius_coefficient) + 32
         return results
 
-    def kelvin(self) -> Union[np.ndarray, int, float]:
+    def kelvin(self) -> np.ndarray:
         return self.value
 
-    def get(self, unit: Union[AbstractUnit, FamousTempUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[AbstractUnit, FamousTempUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = TempUnit.from_string(unit)
@@ -79,4 +79,4 @@ class Temperature(AbstractParam):
         elif unit.is_fahrenheit():
             return self.fahrenheit()
         else:
-            raise ValueError("Неизвестная еденица измерения температуры")
+            raise ValueError("Неизвестная единица измерения температуры")

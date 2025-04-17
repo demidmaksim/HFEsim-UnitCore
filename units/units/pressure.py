@@ -4,10 +4,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 
 FamousPresUnit = Literal["Bar", "Pascal", "MegaPascal", "At", "atm", "psi"]
@@ -46,7 +48,7 @@ class Pressure(AbstractParam):
 
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[PresUnit, FamousPresUnit] = PresUnit.atm,
     ):
 
@@ -70,8 +72,9 @@ class Pressure(AbstractParam):
 
         self.value = value
 
-    @staticmethod
-    def normal_conditions() -> Pressure:
+    @classmethod
+    @property
+    def normal_conditions(cls) -> Pressure:
         value = 0.1013 * 10**6
         return Pressure(value, PresUnit.Pa)
 
@@ -84,25 +87,25 @@ class Pressure(AbstractParam):
     def default_unit() -> PresUnit:
         return PresUnit.Pa
 
-    def psi(self) -> Union[np.ndarray, int, float]:
+    def psi(self) -> np.ndarray:
         return self.value / self.__psi_coefficient
 
-    def bar(self) -> Union[np.ndarray, int, float]:
+    def bar(self) -> np.ndarray:
         return self.value / self.__bar_coefficient
 
-    def pa(self) -> Union[np.ndarray, int, float]:
+    def pa(self) -> np.ndarray:
         return self.value
 
-    def mpa(self) -> Union[np.ndarray, int, float]:
+    def mpa(self) -> np.ndarray:
         return self.value / 10**6
 
-    def at(self) -> Union[np.ndarray, int, float]:
+    def at(self) -> np.ndarray:
         return self.value / 98066.5
 
-    def atm(self) -> Union[np.ndarray, int, float]:
+    def atm(self) -> np.ndarray:
         return self.value / 101325
 
-    def get(self, unit: Union[AbstractUnit, FamousPresUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[PresUnit, FamousPresUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = PresUnit.from_string(unit)

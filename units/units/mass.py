@@ -4,10 +4,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 
 FamousMassUnit = Literal["kg"]
@@ -23,7 +25,7 @@ class MassUnit(AbstractUnit):
 class Mass(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[MassUnit, FamousMassUnit] = MassUnit.kg,
     ) -> None:
 
@@ -41,10 +43,10 @@ class Mass(AbstractParam):
     def default_unit() -> MassUnit:
         return MassUnit.kg
 
-    def kg(self) -> Union[np.ndarray, int, float]:
+    def kg(self) -> np.ndarray:
         return self.value
 
-    def get(self, unit: Union[AbstractUnit, FamousMassUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[AbstractUnit, FamousMassUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = MassUnit.from_string(unit)

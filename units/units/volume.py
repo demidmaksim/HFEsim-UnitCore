@@ -4,10 +4,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 
 FamousVolumeUnit = Literal["m3"]
@@ -23,7 +25,7 @@ class VolumeUnit(AbstractUnit):
 class Volume(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[VolumeUnit, FamousVolumeUnit] = VolumeUnit.m3,
     ) -> None:
 
@@ -41,10 +43,10 @@ class Volume(AbstractParam):
     def default_unit() -> VolumeUnit:
         return VolumeUnit.m3
 
-    def m3(self) -> Union[np.ndarray, int, float]:
+    def m3(self) -> np.ndarray:
         return self.value
 
-    def get(self, unit: Union[VolumeUnit, FamousVolumeUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[VolumeUnit, FamousVolumeUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = VolumeUnit.from_string(unit)

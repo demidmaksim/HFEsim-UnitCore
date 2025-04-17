@@ -2,7 +2,7 @@ from typing import get_args
 
 import pytest
 
-from units import (
+from units.units import (
     DensityUnit,
     FamousDensityUnit,
     FamousMassUnit,
@@ -20,7 +20,7 @@ from units import (
     VolumeFactorUnit,
     VolumeUnit,
 )
-from units.abstract import AbstractUnit
+from units.units.abstract import AbstractUnit
 
 all_param = [
     (DensityUnit, FamousDensityUnit),
@@ -34,7 +34,7 @@ all_param = [
 ]
 
 
-@pytest.mark.parametrize("unit, famous", all_param)
+@pytest.mark.parametrize("units, famous", all_param)
 def test_famous_unit_value(unit: AbstractUnit, famous):
     famous = get_args(famous)
     for u in unit:
@@ -44,7 +44,7 @@ def test_famous_unit_value(unit: AbstractUnit, famous):
         assert f in [u.value for u in unit]
 
 
-@pytest.mark.parametrize("unit, famous", all_param)
+@pytest.mark.parametrize("units, famous", all_param)
 def test_from_string(unit: AbstractUnit, famous):
     for f in get_args(famous):
         assert unit.from_string(f) in [u for u in unit]

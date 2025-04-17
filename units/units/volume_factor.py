@@ -4,10 +4,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 FamousVolumeFactorUnit = Literal["si"]
 
@@ -22,7 +24,7 @@ class VolumeFactorUnit(AbstractUnit):
 class VolumeFactor(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[VolumeFactorUnit, FamousVolumeFactorUnit] = VolumeFactorUnit.si,
     ):
 
@@ -41,12 +43,10 @@ class VolumeFactor(AbstractParam):
     def default_unit() -> VolumeFactorUnit:
         return VolumeFactorUnit.si
 
-    def si(self) -> Union[np.ndarray, int, float]:
+    def si(self) -> np.ndarray:
         return self.value
 
-    def get(
-        self, unit: Union[AbstractUnit, FamousVolumeFactorUnit]
-    ) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[VolumeFactorUnit, FamousVolumeFactorUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = VolumeFactorUnit.from_string(unit)

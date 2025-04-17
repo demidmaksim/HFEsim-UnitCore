@@ -4,10 +4,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 
 FamousViscUnit = Literal["CentiPoise", "Newton_second"]
@@ -29,7 +31,7 @@ class Viscosity(AbstractParam):
 
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[ViscUnit, FamousViscUnit] = ViscUnit.cP,
     ):
 
@@ -55,7 +57,7 @@ class Viscosity(AbstractParam):
     def cp(self) -> Union[np.ndarray, int, float]:
         return self.value / self.__cp_coefficient
 
-    def get(self, unit: Union[AbstractUnit, FamousViscUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[ViscUnit, FamousViscUnit]) -> Union[np.ndarray, int, float]:
 
         if isinstance(unit, str):
             unit = ViscUnit.from_string(unit)

@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 
 FamousSolubilityUnit = Literal["м3/м3", "Foot_per_barrel"]
@@ -30,7 +31,7 @@ class Solubility(AbstractParam):
 
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[SolubilityUnit, FamousSolubilityUnit] = SolubilityUnit.m3_per_m3,
     ):
         self.value = value
@@ -46,23 +47,23 @@ class Solubility(AbstractParam):
             msg = "Неизвестная еденица измерения газосодержания"
             raise ValueError(msg)
 
-    def __from_m3_per_m3(self) -> Union[np.ndarray, int, float]:
+    def __from_m3_per_m3(self) -> np.ndarray:
         return self.value
 
-    def __from_foot_per_barrel(self) -> Union[np.ndarray, int, float]:
+    def __from_foot_per_barrel(self) -> np.ndarray:
         return self.value / self.__foot_per_barrel
 
     @staticmethod
     def default_unit() -> SolubilityUnit:
         return SolubilityUnit.m3_per_m3
 
-    def m3_per_m3(self) -> Union[np.ndarray, int, float]:
+    def m3_per_m3(self) -> np.ndarray:
         return self.value
 
-    def foot_per_barrel(self) -> Union[np.ndarray, int, float]:
+    def foot_per_barrel(self) -> np.ndarray:
         return self.value * self.__foot_per_barrel
 
-    def get(self, unit: Union[AbstractUnit, FamousSolubilityUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[SolubilityUnit, FamousSolubilityUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = SolubilityUnit.from_string(unit)

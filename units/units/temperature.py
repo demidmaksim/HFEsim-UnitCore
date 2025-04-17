@@ -4,10 +4,12 @@ from typing import TYPE_CHECKING, Literal
 
 import numpy as np
 
-from units.abstract import AbstractParam, AbstractUnit
+from units.units.abstract import AbstractParam, AbstractUnit
 
 if TYPE_CHECKING:
     from typing import Union
+
+    from units.utils.types_ import float_, int_
 
 
 FamousTempUnit = Literal["Kelvin", "Celsius", "Fahrenheit"]
@@ -33,7 +35,7 @@ class Temperature(AbstractParam):
 
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        value: Union[np.ndarray, float_, int_],
         unit: Union[TempUnit, FamousTempUnit] = TempUnit.Celsius,
     ):
 
@@ -67,7 +69,7 @@ class Temperature(AbstractParam):
     def kelvin(self) -> np.ndarray:
         return self.value
 
-    def get(self, unit: Union[AbstractUnit, FamousTempUnit]) -> np.ndarray:
+    def get(self, unit: Union[TempUnit, FamousTempUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = TempUnit.from_string(unit)

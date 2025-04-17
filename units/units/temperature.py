@@ -12,13 +12,14 @@ if TYPE_CHECKING:
     from units.utils.types_ import float_, int_
 
 
-FamousTempUnit = Literal["Kelvin", "Celsius", "Fahrenheit"]
+FamousTempUnit = Literal["Kelvin", "Celsius", "Fahrenheit", "Rankin"]
 
 
 class TempUnit(AbstractUnit):
     Kelvin = "Kelvin"
     Celsius = "Celsius"
     Fahrenheit = "Fahrenheit"
+    Rankin = "Rankin"
 
     def is_kelvin(self) -> bool:
         return self == self.Kelvin
@@ -28,6 +29,9 @@ class TempUnit(AbstractUnit):
 
     def is_fahrenheit(self) -> bool:
         return self == self.Fahrenheit
+
+    def is_rankin(self) -> bool:
+        return self == self.Rankin
 
 
 class Temperature(AbstractParam):
@@ -69,6 +73,9 @@ class Temperature(AbstractParam):
     def kelvin(self) -> np.ndarray:
         return self.value
 
+    def rankin(self) -> np.ndarray:
+        return self.fahrenheit() + 459.67
+
     def get(self, unit: Union[TempUnit, FamousTempUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
@@ -80,5 +87,7 @@ class Temperature(AbstractParam):
             return self.celsius()
         elif unit.is_fahrenheit():
             return self.fahrenheit()
+        elif unit.is_rankin():
+            return self.rankin()
         else:
             raise ValueError("Неизвестная единица измерения температуры")

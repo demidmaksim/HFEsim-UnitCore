@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "unitcore"
+name = "units"
 version = "0.1.0"
 description = ""
 authors = ["Демид Максим Сергеевич <demid.maksim@gmai.com>"]

@@ -9,7 +9,7 @@ readme = "readme.md"
 python = "^3.11"
 numpy = "^1.26.0"
 
-[tool.poetry.dependencies.dev-dependencies]
+[tool.poetry.dev-dependencies]
 pytest = "^8.3.4"
 
 

@@ -1,17 +1,16 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Union, Self, Optional, Iterable, Literal
-from enum import StrEnum
-import numpy as np
-
 from abc import ABC, abstractmethod
+from enum import StrEnum
+from typing import TYPE_CHECKING, Iterable, Literal, Optional, Self, Union
+
+import numpy as np
 
 if TYPE_CHECKING:
     pass
 
 
 class AbstractUnit(StrEnum):
-
     @classmethod
     def from_string(cls, value: str) -> Self:
         for v in cls:

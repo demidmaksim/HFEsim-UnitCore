@@ -44,7 +44,7 @@ class Volume(AbstractParam):
     def m3(self) -> Union[np.ndarray, int, float]:
         return self.value
 
-    def get(self, unit: Union[AbstractUnit, FamousVolumeUnit]) -> Union[np.ndarray, int, float]:
+    def get(self, unit: Union[VolumeUnit, FamousVolumeUnit]) -> Union[np.ndarray, int, float]:
 
         if isinstance(unit, str):
             unit = VolumeUnit.from_string(unit)

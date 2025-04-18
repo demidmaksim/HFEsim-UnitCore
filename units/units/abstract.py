@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from enum import StrEnum
-from typing import TYPE_CHECKING, Iterable, Literal, Optional, Self, Union
+from typing import TYPE_CHECKING, Iterable, Iterator, Literal, Optional, Self, Union
 
 import numpy as np
 
@@ -20,7 +20,7 @@ class AbstractUnit(StrEnum):
         raise ValueError()
 
 
-class AbstractParam(ABC):
+class AbstractParam(Iterable, ABC):
     value: np.ndarray
 
     @abstractmethod
@@ -61,7 +61,7 @@ class AbstractParam(ABC):
     def __repr__(self):
         return f"{self.__class__.__name__}: {self.value.__repr__()}"
 
-    def __iter__(self) -> Iterable[Self]:
+    def __iter__(self) -> Iterator[Self]:
         for v in self.value:
             yield self.__class__(v, self.default_unit())
 

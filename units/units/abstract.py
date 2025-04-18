@@ -61,6 +61,10 @@ class AbstractParam(ABC):
     def __repr__(self):
         return f"{self.__class__.__name__}: {self.value.__repr__()}"
 
+    def __iter__(self) -> Iterable[Self]:
+        for v in self.value:
+            yield self.__class__(v, self.default_unit())
+
     @staticmethod
     @abstractmethod
     def default_unit() -> AbstractUnit:

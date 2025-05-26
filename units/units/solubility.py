@@ -51,7 +51,7 @@ class Solubility(AbstractParam):
         return self.value
 
     def __from_foot_per_barrel(self) -> np.ndarray:
-        return self.value / self.__foot_per_barrel
+        return self.value * self.__foot_per_barrel
 
     @staticmethod
     def default_unit() -> SolubilityUnit:
@@ -61,7 +61,7 @@ class Solubility(AbstractParam):
         return self.value
 
     def foot_per_barrel(self) -> np.ndarray:
-        return self.value * self.__foot_per_barrel
+        return self.value / self.__foot_per_barrel
 
     def get(self, unit: Union[SolubilityUnit, FamousSolubilityUnit]) -> np.ndarray:
 

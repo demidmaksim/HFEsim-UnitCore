@@ -62,7 +62,7 @@ class Density(AbstractParam):
         return self.value
 
     def api(self) -> Union[np.ndarray, int, float]:
-        return 141.5 / self.value * 1000 - 131.5
+        return 141.5 / self.value - 131.5
 
     def get(self, unit: Union[AbstractUnit, FamousDensityUnit]) -> Union[np.ndarray, int, float]:
 

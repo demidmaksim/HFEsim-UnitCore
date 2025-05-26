@@ -65,6 +65,42 @@ class AbstractParam(Iterable, ABC):
         for v in self.value:
             yield self.__class__(v, self.default_unit())
 
+    def __eq__(self, other: Self) -> np.ndarray:
+        if not isinstance(other, self.__class__):
+            raise TypeError()
+
+        return self.value == other.value
+
+    def __ne__(self, other: Self) -> np.ndarray:
+        if not isinstance(other, self.__class__):
+            raise TypeError()
+
+        return self.value != other.value
+
+    def __lt__(self, other: Self) -> np.ndarray:
+        if not isinstance(other, self.__class__):
+            raise TypeError()
+
+        return self.value < other.value
+
+    def __gt__(self, other: Self) -> np.ndarray:
+        if not isinstance(other, self.__class__):
+            raise TypeError()
+
+        return self.value > other.value
+
+    def __le__(self, other: Self) -> np.ndarray:
+        if not isinstance(other, self.__class__):
+            raise TypeError()
+
+        return self.value <= other.value
+
+    def __ge__(self, other: Self) -> np.ndarray:
+        if not isinstance(other, self.__class__):
+            raise TypeError()
+
+        return self.value >= other.value
+
     @staticmethod
     @abstractmethod
     def default_unit() -> AbstractUnit:

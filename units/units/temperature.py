@@ -51,9 +51,9 @@ class Temperature(AbstractParam):
         elif unit.is_celsius():
             value = value + self.__celsius_coefficient
         elif unit.is_fahrenheit():
-            value = value + self.__celsius_coefficient
             value = value - 32
             value = value / 1.8
+            value = value + self.__celsius_coefficient
         else:
             raise ValueError("Неизвестная еденица измерения температуры")
 
@@ -64,7 +64,7 @@ class Temperature(AbstractParam):
         return TempUnit.Kelvin
 
     def celsius(self) -> np.ndarray:
-        return self.value
+        return self.value - self.__celsius_coefficient
 
     def fahrenheit(self) -> np.ndarray:
         results = 1.8 * (self.value - self.__celsius_coefficient) + 32

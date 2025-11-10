@@ -41,7 +41,7 @@ class Temperature(AbstractParam):
         self,
         value: Union[np.ndarray, float_, int_],
         unit: Union[TempUnit, FamousTempUnit] = TempUnit.Celsius,
-    ):
+    ) -> None:
 
         if isinstance(unit, str):
             unit = TempUnit.from_string(unit)

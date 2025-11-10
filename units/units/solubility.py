@@ -33,7 +33,7 @@ class Solubility(AbstractParam):
         self,
         value: Union[np.ndarray, float_, int_],
         unit: Union[SolubilityUnit, FamousSolubilityUnit] = SolubilityUnit.m3_per_m3,
-    ):
+    ) -> None:
         self.value = value
 
         if isinstance(unit, str):

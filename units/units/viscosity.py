@@ -33,7 +33,7 @@ class Viscosity(AbstractParam):
         self,
         value: Union[np.ndarray, float_, int_],
         unit: Union[ViscUnit, FamousViscUnit] = ViscUnit.cP,
-    ):
+    ) -> None:
 
         if isinstance(unit, str):
             unit = ViscUnit.from_string(unit)

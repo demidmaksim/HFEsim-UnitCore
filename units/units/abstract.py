@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Iterable, Iterator, Literal, Optional, Self, U
 import numpy as np
 
 if TYPE_CHECKING:
-    pass
+    from units.utils.types_ import float_
 
 
 class AbstractUnit(StrEnum):
@@ -18,6 +18,10 @@ class AbstractUnit(StrEnum):
                 return v
 
         raise ValueError()
+
+    @abstractmethod
+    def coefficients(self) -> float_:
+        pass
 
 
 class AbstractParam(Iterable, ABC):

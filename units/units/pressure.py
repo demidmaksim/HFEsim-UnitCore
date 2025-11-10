@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from units.utils.types_ import float_, int_
 
 
-FamousPresUnit = Literal["Bar", "Pascal", "MegaPascal", "At", "atm", "psi"]
+FamousPresUnit = Literal["Bar", "Pascal", "MegaPascal", "At", "Atm", "psi"]
 
 
 class PresUnit(AbstractUnit):
@@ -20,7 +20,7 @@ class PresUnit(AbstractUnit):
     Pa = "Pascal"
     MPa = "MegaPascal"
     At = "At"
-    atm = "atm"
+    Atm = "Atm"
     psi = "psi"
 
     def is_bar(self) -> bool:
@@ -36,40 +36,40 @@ class PresUnit(AbstractUnit):
         return self == self.At
 
     def is_atm(self) -> bool:
-        return self == self.atm
+        return self == self.Atm
 
     def is_psi(self) -> bool:
         return self == self.psi
 
+    def coefficients(self) -> float_:
+        data = {
+            self.Bar: 10**5,
+            self.Pa: 1,
+            self.MPa: 10**6,
+            self.At: 98066.5,
+            self.Atm: 101325,
+            self.psi: 6894.76,
+        }
+
+        try:
+            results = data[self]
+        except KeyError:
+            raise ValueError("Неизвестная еденица измерения давления")
+
+        return results
+
 
 class Pressure(AbstractParam):
-    __psi_coefficient = 6894.76
-    __bar_coefficient = 10**5
-
     def __init__(
         self,
         value: Union[np.ndarray, float_, int_],
-        unit: Union[PresUnit, FamousPresUnit] = PresUnit.atm,
-    ):
+        unit: Union[PresUnit, FamousPresUnit] = PresUnit.Atm,
+    ) -> None:
 
         if isinstance(unit, str):
             unit = PresUnit.from_string(unit)
 
-        if unit.is_bar():
-            value = value * self.__bar_coefficient
-        elif unit.is_psi():
-            value = value * self.__psi_coefficient
-        elif unit.is_pascal():
-            pass
-        elif unit.is_mega_pascal():
-            value = value * 10**6
-        elif unit.is_at():
-            value = value * 98066.5
-        elif unit.is_atm():
-            value = value * 101325
-        else:
-            raise ValueError("Неизвестная еденица измерения давления")
-
+        value = value * unit.coefficients()
         self.value = value
 
     @classmethod
@@ -88,39 +88,27 @@ class Pressure(AbstractParam):
         return PresUnit.Pa
 
     def psi(self) -> np.ndarray:
-        return self.value / self.__psi_coefficient
+        return self.value / PresUnit.psi.coefficients()
 
     def bar(self) -> np.ndarray:
-        return self.value / self.__bar_coefficient
+        return self.value / PresUnit.Bar.coefficients()
 
     def pa(self) -> np.ndarray:
-        return self.value
+        return self.value / PresUnit.Pa.coefficients()
 
     def mpa(self) -> np.ndarray:
-        return self.value / 10**6
+        return self.value / PresUnit.MPa.coefficients()
 
     def at(self) -> np.ndarray:
-        return self.value / 98066.5
+        return self.value / PresUnit.At.coefficients()
 
     def atm(self) -> np.ndarray:
-        return self.value / 101325
+        return self.value / PresUnit.Atm.coefficients()
 
     def get(self, unit: Union[PresUnit, FamousPresUnit]) -> np.ndarray:
 
         if isinstance(unit, str):
             unit = PresUnit.from_string(unit)
 
-        if unit.is_bar():
-            return self.bar()
-        elif unit.is_psi():
-            return self.psi()
-        elif unit.is_pascal():
-            return self.pa()
-        elif unit.is_mega_pascal():
-            return self.mpa()
-        elif unit.is_at():
-            return self.at()
-        elif unit.is_atm():
-            return self.atm()
-        else:
-            raise ValueError("Неизвестная еденица измерения давления")
+        value = self.value / unit.coefficients()
+        return value

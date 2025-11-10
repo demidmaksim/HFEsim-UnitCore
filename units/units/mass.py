@@ -51,9 +51,6 @@ class Mass(AbstractParam):
         if isinstance(unit, str):
             unit = MassUnit.from_string(unit)
 
-        if isinstance(unit, str):
-            unit = MassUnit.from_string(unit)
-
         if unit.is_kg():
             return self.kg()
         else:

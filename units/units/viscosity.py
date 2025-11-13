@@ -31,7 +31,7 @@ class Viscosity(AbstractParam):
 
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[ViscUnit, FamousViscUnit] = ViscUnit.cP,
     ) -> None:
         if isinstance(unit, str):
@@ -40,18 +40,18 @@ class Viscosity(AbstractParam):
         if unit.is_newton():
             pass
         if unit.is_cp():
-            value = value * self.__cp_coefficient
+            magnitude = magnitude * self.__cp_coefficient
         else:
             raise ValueError("Неизвестная еденица измерения вязкости")
 
-        self.value = value
+        self.magnitude = magnitude
 
     @staticmethod
     def default_unit() -> ViscUnit:
         return ViscUnit.Newton
 
     def newton(self) -> Union[np.ndarray, int, float]:
-        return self.value
+        return self.magnitude
 
     def cp(self) -> Union[np.ndarray, int, float]:
-        return self.value / self.__cp_coefficient
+        return self.magnitude / self.__cp_coefficient

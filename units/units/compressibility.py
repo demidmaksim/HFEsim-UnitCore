@@ -42,23 +42,23 @@ class CompressibilityUnit(AbstractUnit):
 class Compressibility(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[CompressibilityUnit, FamousCompressibilityUnit] = CompressibilityUnit.Pa,
     ) -> None:
-        self.value = value
+        self.magnitude = magnitude
 
         if isinstance(unit, str):
             unit = CompressibilityUnit.from_string(unit)
 
-        value = value * unit.coefficients()
-        self.value = value
+        magnitude = magnitude * unit.coefficients()
+        self.magnitude = magnitude
 
     @staticmethod
     def default_unit() -> CompressibilityUnit:
         return CompressibilityUnit.Pa
 
     def pa(self) -> np.ndarray:
-        return self.value / CompressibilityUnit.Pa.coefficients()
+        return self.magnitude / CompressibilityUnit.Pa.coefficients()
 
     def mpa(self) -> np.ndarray:
-        return self.value / CompressibilityUnit.MPa.coefficients()
+        return self.magnitude / CompressibilityUnit.MPa.coefficients()

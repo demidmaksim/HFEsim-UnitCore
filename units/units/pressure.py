@@ -62,14 +62,14 @@ class PresUnit(AbstractUnit):
 class Pressure(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[PresUnit, FamousPresUnit] = PresUnit.Atm,
     ) -> None:
         if isinstance(unit, str):
             unit = PresUnit.from_string(unit)
 
-        value = value * unit.coefficients()
-        self.value = value
+        magnitude = magnitude * unit.coefficients()
+        self.magnitude = magnitude
 
     @classmethod
     def normal_conditions(cls) -> Pressure:
@@ -86,19 +86,19 @@ class Pressure(AbstractParam):
         return PresUnit.Pa
 
     def psi(self) -> np.ndarray:
-        return self.value / PresUnit.psi.coefficients()
+        return self.magnitude / PresUnit.psi.coefficients()
 
     def bar(self) -> np.ndarray:
-        return self.value / PresUnit.Bar.coefficients()
+        return self.magnitude / PresUnit.Bar.coefficients()
 
     def pa(self) -> np.ndarray:
-        return self.value / PresUnit.Pa.coefficients()
+        return self.magnitude / PresUnit.Pa.coefficients()
 
     def mpa(self) -> np.ndarray:
-        return self.value / PresUnit.MPa.coefficients()
+        return self.magnitude / PresUnit.MPa.coefficients()
 
     def at(self) -> np.ndarray:
-        return self.value / PresUnit.At.coefficients()
+        return self.magnitude / PresUnit.At.coefficients()
 
     def atm(self) -> np.ndarray:
-        return self.value / PresUnit.Atm.coefficients()
+        return self.magnitude / PresUnit.Atm.coefficients()

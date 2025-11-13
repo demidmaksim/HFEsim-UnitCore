@@ -31,34 +31,34 @@ class Solubility(AbstractParam):
 
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[SolubilityUnit, FamousSolubilityUnit] = SolubilityUnit.m3_per_m3,
     ) -> None:
-        self.value = value
+        self.magnitude = magnitude
 
         if isinstance(unit, str):
             unit = SolubilityUnit.from_string(unit)
 
         if unit.is_m3_per_m3():
-            self.value = self.__from_m3_per_m3()
+            self.magnitude = self.__from_m3_per_m3()
         elif unit.is_foot_per_barrel():
-            self.value = self.__from_foot_per_barrel()
+            self.magnitude = self.__from_foot_per_barrel()
         else:
             msg = "Неизвестная еденица измерения газосодержания"
             raise ValueError(msg)
 
     def __from_m3_per_m3(self) -> np.ndarray:
-        return self.value
+        return self.magnitude
 
     def __from_foot_per_barrel(self) -> np.ndarray:
-        return self.value * self.__foot_per_barrel
+        return self.magnitude * self.__foot_per_barrel
 
     @staticmethod
     def default_unit() -> SolubilityUnit:
         return SolubilityUnit.m3_per_m3
 
     def m3_per_m3(self) -> np.ndarray:
-        return self.value
+        return self.magnitude
 
     def foot_per_barrel(self) -> np.ndarray:
-        return self.value / self.__foot_per_barrel
+        return self.magnitude / self.__foot_per_barrel

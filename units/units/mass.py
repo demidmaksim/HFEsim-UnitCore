@@ -25,7 +25,7 @@ class MassUnit(AbstractUnit):
 class Mass(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[MassUnit, FamousMassUnit] = MassUnit.kg,
     ) -> None:
         if isinstance(unit, str):
@@ -36,11 +36,11 @@ class Mass(AbstractParam):
         else:
             raise ValueError("Неизвестная еденица измерения Массы")
 
-        self.value = value
+        self.magnitude = magnitude
 
     @staticmethod
     def default_unit() -> MassUnit:
         return MassUnit.kg
 
     def kg(self) -> np.ndarray:
-        return self.value
+        return self.magnitude

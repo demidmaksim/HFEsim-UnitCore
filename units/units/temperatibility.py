@@ -37,19 +37,19 @@ class TemperatibilityUnit(AbstractUnit):
 class Temperatibility(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[TemperatibilityUnit, FamousTemperatibilityUnit] = TemperatibilityUnit.Kelvin,
     ) -> None:
-        self.value = value
+        self.magnitude = magnitude
 
         if isinstance(unit, str):
             unit = TemperatibilityUnit.from_string(unit)
 
-        value = value * unit.coefficients()
-        self.value = value
+        magnitude = magnitude * unit.coefficients()
+        self.magnitude = magnitude
 
     def kelvin(self) -> np.ndarray:
-        return self.value / TemperatibilityUnit.Kelvin.coefficients()
+        return self.magnitude / TemperatibilityUnit.Kelvin.coefficients()
 
     @staticmethod
     def default_unit() -> TemperatibilityUnit:

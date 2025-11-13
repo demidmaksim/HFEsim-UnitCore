@@ -9,10 +9,15 @@ readme = "readme.md"
 python = "^3.11"
 numpy = "^1.26.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
 allure-pytest = "^2.14.0"
+poetry = "^2.2.0"
+pre-commit = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+ignore_missing_imports = true

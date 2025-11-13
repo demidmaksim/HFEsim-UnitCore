@@ -65,7 +65,6 @@ class Pressure(AbstractParam):
         value: Union[np.ndarray, float_, int_],
         unit: Union[PresUnit, FamousPresUnit] = PresUnit.Atm,
     ) -> None:
-
         if isinstance(unit, str):
             unit = PresUnit.from_string(unit)
 
@@ -73,7 +72,6 @@ class Pressure(AbstractParam):
         self.value = value
 
     @classmethod
-    @property
     def normal_conditions(cls) -> Pressure:
         value = 0.1013 * 10**6
         return Pressure(value, PresUnit.Pa)
@@ -104,11 +102,3 @@ class Pressure(AbstractParam):
 
     def atm(self) -> np.ndarray:
         return self.value / PresUnit.Atm.coefficients()
-
-    def get(self, unit: Union[PresUnit, FamousPresUnit]) -> np.ndarray:
-
-        if isinstance(unit, str):
-            unit = PresUnit.from_string(unit)
-
-        value = self.value / unit.coefficients()
-        return value

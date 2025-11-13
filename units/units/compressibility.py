@@ -62,11 +62,3 @@ class Compressibility(AbstractParam):
 
     def mpa(self) -> np.ndarray:
         return self.value / CompressibilityUnit.MPa.coefficients()
-
-    def get(self, unit: Union[CompressibilityUnit, FamousCompressibilityUnit]) -> np.ndarray:
-
-        if isinstance(unit, str):
-            unit = CompressibilityUnit.from_string(unit)
-
-        value = self.value / unit.coefficients()
-        return value

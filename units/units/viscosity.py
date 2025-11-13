@@ -34,7 +34,6 @@ class Viscosity(AbstractParam):
         value: Union[np.ndarray, float_, int_],
         unit: Union[ViscUnit, FamousViscUnit] = ViscUnit.cP,
     ) -> None:
-
         if isinstance(unit, str):
             unit = ViscUnit.from_string(unit)
 
@@ -56,15 +55,3 @@ class Viscosity(AbstractParam):
 
     def cp(self) -> Union[np.ndarray, int, float]:
         return self.value / self.__cp_coefficient
-
-    def get(self, unit: Union[ViscUnit, FamousViscUnit]) -> Union[np.ndarray, int, float]:
-
-        if isinstance(unit, str):
-            unit = ViscUnit.from_string(unit)
-
-        if unit.is_newton():
-            return self.newton()
-        if unit.is_cp():
-            return self.cp()
-        else:
-            raise ValueError("Неизвестная еденица измерения вязкости")

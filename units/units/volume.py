@@ -28,7 +28,6 @@ class Volume(AbstractParam):
         value: Union[np.ndarray, float_, int_],
         unit: Union[VolumeUnit, FamousVolumeUnit] = VolumeUnit.m3,
     ) -> None:
-
         if isinstance(unit, str):
             unit = VolumeUnit.from_string(unit)
 
@@ -45,13 +44,3 @@ class Volume(AbstractParam):
 
     def m3(self) -> np.ndarray:
         return self.value
-
-    def get(self, unit: Union[VolumeUnit, FamousVolumeUnit]) -> np.ndarray:
-
-        if isinstance(unit, str):
-            unit = VolumeUnit.from_string(unit)
-
-        if unit.is_m3():
-            return self.m3()
-        else:
-            raise ValueError("Неизвестная еденица измерения oбъема")

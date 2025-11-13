@@ -35,7 +35,6 @@ class Density(AbstractParam):
         unit: Union[DensityUnit, FamousDensityUnit] = DensityUnit.kg_per_m3,
         relative_coefficient: Union[int, float] = 1000,
     ) -> None:
-
         if isinstance(unit, str):
             unit = DensityUnit.from_string(unit)
 
@@ -63,17 +62,3 @@ class Density(AbstractParam):
 
     def api(self) -> Union[np.ndarray, int, float]:
         return 141.5 / self.value - 131.5
-
-    def get(self, unit: Union[AbstractUnit, FamousDensityUnit]) -> Union[np.ndarray, int, float]:
-
-        if isinstance(unit, str):
-            unit = DensityUnit.from_string(unit)
-
-        if unit.is_kg_per_m3():
-            return self.kg_per_m3()
-        elif unit.is_relative():
-            return self.relative()
-        elif unit.is_api():
-            return self.api()
-        else:
-            raise ValueError("Неизвестная еденица измерения плотности")

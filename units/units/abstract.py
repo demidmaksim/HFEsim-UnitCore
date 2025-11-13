@@ -31,7 +31,7 @@ class AbstractParam(Iterable, ABC):
     def __init__(
         self,
         value: Union[np.ndarray, int, float],
-        unit: AbstractUnit = None,
+        unit: AbstractUnit,
     ):
         pass
 
@@ -69,13 +69,13 @@ class AbstractParam(Iterable, ABC):
         for v in self.value:
             yield self.__class__(v, self.default_unit())
 
-    def __eq__(self, other: Self) -> np.ndarray:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
         return self.value == other.value
 
-    def __ne__(self, other: Self) -> np.ndarray:
+    def __ne__(self, other: object) -> bool:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
@@ -110,10 +110,6 @@ class AbstractParam(Iterable, ABC):
     def default_unit() -> AbstractUnit:
         pass
 
-    @abstractmethod
-    def get(self, unit: Union[AbstractUnit, str]) -> Union[np.ndarray, int, float]:
-        pass
-
     @classmethod
     def create(
         cls,
@@ -123,6 +119,8 @@ class AbstractParam(Iterable, ABC):
         num: Optional[int] = None,
         unit: Optional[AbstractUnit] = None,
     ) -> Self:
+        if unit is None:
+            unit = cls.default_unit()
 
         if isinstance(start, AbstractParam):
             start = start.value[0]
@@ -154,6 +152,8 @@ class AbstractParam(Iterable, ABC):
         num: Optional[int] = None,
         unit: Optional[AbstractUnit] = None,
     ) -> Iterable[Self]:
+        if unit is None:
+            unit = cls.default_unit()
 
         if isinstance(start, AbstractParam):
             start = start.value[0]

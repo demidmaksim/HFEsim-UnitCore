@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from units.utils.types_ import float_, int_
 
 
-FamousTemperatibilityUnit = Literal["Pa", "MPa"]
+FamousTemperatibilityUnit = Literal["1/K"]
 
 
 class TemperatibilityUnit(AbstractUnit):
@@ -54,11 +54,3 @@ class Temperatibility(AbstractParam):
     @staticmethod
     def default_unit() -> TemperatibilityUnit:
         return TemperatibilityUnit.Kelvin
-
-    def get(self, unit: Union[TemperatibilityUnit, FamousTemperatibilityUnit]) -> np.ndarray:
-
-        if isinstance(unit, str):
-            unit = TemperatibilityUnit.from_string(unit)
-
-        value = self.value / unit.coefficients()
-        return value

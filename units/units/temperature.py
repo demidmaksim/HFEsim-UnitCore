@@ -42,7 +42,6 @@ class Temperature(AbstractParam):
         value: Union[np.ndarray, float_, int_],
         unit: Union[TempUnit, FamousTempUnit] = TempUnit.Celsius,
     ) -> None:
-
         if isinstance(unit, str):
             unit = TempUnit.from_string(unit)
 
@@ -75,19 +74,3 @@ class Temperature(AbstractParam):
 
     def rankin(self) -> np.ndarray:
         return self.fahrenheit() + 459.67
-
-    def get(self, unit: Union[TempUnit, FamousTempUnit]) -> np.ndarray:
-
-        if isinstance(unit, str):
-            unit = TempUnit.from_string(unit)
-
-        if unit.is_kelvin():
-            return self.kelvin()
-        elif unit.is_celsius():
-            return self.celsius()
-        elif unit.is_fahrenheit():
-            return self.fahrenheit()
-        elif unit.is_rankin():
-            return self.rankin()
-        else:
-            raise ValueError("Неизвестная единица измерения температуры")

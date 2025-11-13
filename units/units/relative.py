@@ -22,6 +22,3 @@ class RelativeAbstractParam(AbstractParam):
     @staticmethod
     def default_unit():
         raise NotImplementedError()
-
-    def get(self, unit: Union[AbstractUnit, str]) -> Union[np.ndarray, int, float]:
-        raise NotImplementedError()

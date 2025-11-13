@@ -27,7 +27,6 @@ class VolumeFactor(AbstractParam):
         value: Union[np.ndarray, float_, int_],
         unit: Union[VolumeFactorUnit, FamousVolumeFactorUnit] = VolumeFactorUnit.volume_per_volume,
     ) -> None:
-
         if isinstance(unit, str):
             unit = VolumeFactorUnit.from_string(unit)
 
@@ -43,16 +42,5 @@ class VolumeFactor(AbstractParam):
     def default_unit() -> VolumeFactorUnit:
         return VolumeFactorUnit.volume_per_volume
 
-    def si(self) -> np.ndarray:
+    def volume_per_volume(self) -> np.ndarray:
         return self.value
-
-    def get(self, unit: Union[VolumeFactorUnit, FamousVolumeFactorUnit]) -> np.ndarray:
-
-        if isinstance(unit, str):
-            unit = VolumeFactorUnit.from_string(unit)
-
-        if unit.is_si():
-            return self.si()
-        else:
-            msg = "Неизвестная еденица измерения объемного коэфицента"
-            raise ValueError(msg)

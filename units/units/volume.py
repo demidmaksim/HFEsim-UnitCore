@@ -25,7 +25,7 @@ class VolumeUnit(AbstractUnit):
 class Volume(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, float_, int_],
+        magnitude: Union[np.ndarray, float_, int_],
         unit: Union[VolumeUnit, FamousVolumeUnit] = VolumeUnit.m3,
     ) -> None:
         if isinstance(unit, str):
@@ -36,11 +36,11 @@ class Volume(AbstractParam):
         else:
             raise ValueError("Неизвестная еденица измерения oбъема")
 
-        self.value = value
+        self.magnitude = magnitude
 
     @staticmethod
     def default_unit() -> VolumeUnit:
         return VolumeUnit.m3
 
     def m3(self) -> np.ndarray:
-        return self.value
+        return self.magnitude

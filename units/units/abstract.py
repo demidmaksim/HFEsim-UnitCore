@@ -25,12 +25,12 @@ class AbstractUnit(StrEnum):
 
 
 class AbstractParam(Iterable, ABC):
-    value: np.ndarray
+    magnitude: np.ndarray
 
     @abstractmethod
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        magnitude: Union[np.ndarray, int, float],
         unit: AbstractUnit,
     ):
         pass
@@ -46,64 +46,64 @@ class AbstractParam(Iterable, ABC):
             **kwargs,
         ):
             if len(args) > 0:
-                value = args[0]
+                magnitude = args[0]
             else:
-                value = kwargs["value"]
+                magnitude = kwargs["magnitude"]
 
-            if not isinstance(value, np.ndarray):
-                value = np.array([value])
+            if not isinstance(magnitude, np.ndarray):
+                magnitude = np.array([magnitude])
 
             if len(args) > 0:
-                args = (value, *args[1:])
+                args = (magnitude, *args[1:])
             else:
-                kwargs["value"] = value
+                kwargs["magnitude"] = magnitude
 
             original_init(self, *args, **kwargs)
 
         cls.__init__ = new_init
 
     def __repr__(self):
-        return f"{self.__class__.__name__}: {self.value.__repr__()}"
+        return f"{self.__class__.__name__}: {self.magnitude.__repr__()}"
 
     def __iter__(self) -> Iterator[Self]:
-        for v in self.value:
+        for v in self.magnitude:
             yield self.__class__(v, self.default_unit())
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
-        return self.value == other.value
+        return self.magnitude == other.magnitude
 
     def __ne__(self, other: object) -> bool:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
-        return self.value != other.value
+        return self.magnitude != other.magnitude
 
     def __lt__(self, other: Self) -> np.ndarray:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
-        return self.value < other.value
+        return self.magnitude < other.magnitude
 
     def __gt__(self, other: Self) -> np.ndarray:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
-        return self.value > other.value
+        return self.magnitude > other.magnitude
 
     def __le__(self, other: Self) -> np.ndarray:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
-        return self.value <= other.value
+        return self.magnitude <= other.magnitude
 
     def __ge__(self, other: Self) -> np.ndarray:
         if not isinstance(other, self.__class__):
             raise TypeError()
 
-        return self.value >= other.value
+        return self.magnitude >= other.magnitude
 
     @staticmethod
     @abstractmethod
@@ -123,14 +123,14 @@ class AbstractParam(Iterable, ABC):
             unit = cls.default_unit()
 
         if isinstance(start, AbstractParam):
-            start = start.value[0]
+            start = start.magnitude[0]
         else:
-            start = cls(start, unit).value[0]
+            start = cls(start, unit).magnitude[0]
 
         if isinstance(stop, AbstractParam):
-            stop = stop.value[0]
+            stop = stop.magnitude[0]
         else:
-            stop = cls(stop, unit).value[0]
+            stop = cls(stop, unit).magnitude[0]
 
         if (step is not None and num is not None) or (step is None and num is None):
             raise ValueError("необходимо задать step или num")
@@ -141,7 +141,7 @@ class AbstractParam(Iterable, ABC):
         else:
             raise ValueError("Неизвестная ошибка при исполнении функции generate")
 
-        return cls(value=value, unit=cls.default_unit())
+        return cls(magnitude=value, unit=cls.default_unit())
 
     @classmethod
     def generate(
@@ -156,14 +156,14 @@ class AbstractParam(Iterable, ABC):
             unit = cls.default_unit()
 
         if isinstance(start, AbstractParam):
-            start = start.value[0]
+            start = start.magnitude[0]
         else:
-            start = cls(start, unit).value[0]
+            start = cls(start, unit).magnitude[0]
 
         if isinstance(stop, AbstractParam):
-            stop = stop.value[0]
+            stop = stop.magnitude[0]
         else:
-            stop = cls(stop, unit).value[0]
+            stop = cls(stop, unit).magnitude[0]
 
         if (step is not None and num is not None) or (step is None and num is None):
             raise ValueError("необходимо задать step или num")
@@ -176,7 +176,7 @@ class AbstractParam(Iterable, ABC):
 
         for v in value:
             results = cls(
-                value=v,
+                magnitude=v,
                 unit=cls.default_unit(),
             )
             yield results
@@ -188,17 +188,17 @@ class AbstractParam(Iterable, ABC):
         method: Literal["in", "out"] = "in",
     ) -> Self:
         if direction == "more":
-            mask = self.value > value.value
+            mask = self.magnitude > value.magnitude
         elif direction == "less":
-            mask = self.value < value.value
+            mask = self.magnitude < value.magnitude
         else:
             raise ValueError("Неизвестный direction для cut из AbstractParam")
 
-        new_value = self.value[mask]
+        new_value = self.magnitude[mask]
         if method == "in" and direction == "less":
-            new_value = np.concatenate((new_value, value.value))
+            new_value = np.concatenate((new_value, value.magnitude))
         elif method == "in" and direction == "more":
-            new_value = np.concatenate((value.value, new_value))
+            new_value = np.concatenate((value.magnitude, new_value))
         elif method == "out":
             new_value = new_value
         else:

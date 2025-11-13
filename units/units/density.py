@@ -31,7 +31,7 @@ class DensityUnit(AbstractUnit):
 class Density(AbstractParam):
     def __init__(
         self,
-        value: Union[np.ndarray, int, float],
+        magnitude: Union[np.ndarray, int, float],
         unit: Union[DensityUnit, FamousDensityUnit] = DensityUnit.kg_per_m3,
         relative_coefficient: Union[int, float] = 1000,
     ) -> None:
@@ -41,24 +41,24 @@ class Density(AbstractParam):
         if unit.is_kg_per_m3():
             pass
         elif unit.is_relative():
-            value = value * relative_coefficient
+            magnitude = magnitude * relative_coefficient
         elif unit.is_api():
-            value = 141.5 / (value + 131.5)
+            magnitude = 141.5 / (magnitude + 131.5)
         else:
             raise ValueError("Неизвестная еденица измерения плотности")
 
         self.__relative_coefficient = relative_coefficient
-        self.value = value
+        self.magnitude = magnitude
 
     @staticmethod
     def default_unit() -> DensityUnit:
         return DensityUnit.kg_per_m3
 
     def relative(self) -> Union[np.ndarray, int, float]:
-        return self.value / self.__relative_coefficient
+        return self.magnitude / self.__relative_coefficient
 
     def kg_per_m3(self) -> Union[np.ndarray, int, float]:
-        return self.value
+        return self.magnitude
 
     def api(self) -> Union[np.ndarray, int, float]:
-        return 141.5 / self.value - 131.5
+        return 141.5 / self.magnitude - 131.5

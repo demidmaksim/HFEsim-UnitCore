@@ -17,9 +17,13 @@ FamousMassUnit = Literal["kg"]
 
 class MassUnit(AbstractUnit):
     kg = "kg"
+    ton = "ton"
 
     def is_kg(self) -> bool:
         return self == self.kg
+
+    def is_ton(self) -> bool:
+        return self == self.ton
 
 
 class Mass(AbstractParam):
@@ -33,6 +37,8 @@ class Mass(AbstractParam):
 
         if unit.is_kg():
             pass
+        elif unit.is_ton():
+            magnitude = magnitude * 1000
         else:
             raise ValueError("Неизвестная еденица измерения Массы")
 
@@ -44,3 +50,6 @@ class Mass(AbstractParam):
 
     def kg(self) -> np.ndarray:
         return self.magnitude
+
+    def ton(self) -> np.ndarray:
+        return self.magnitude / 1000

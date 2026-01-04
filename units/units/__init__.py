@@ -2,6 +2,7 @@ from .abstract import AbstractParam, AbstractUnit
 from .compressibility import Compressibility, CompressibilityUnit
 from .density import Density, DensityUnit, FamousDensityUnit
 from .mass import FamousMassUnit, Mass, MassUnit
+from .molecular_weight import FamousMolecularWeightUnit, MolecularWeigh, MolecularWeightUnit
 from .pressure import FamousPresUnit, Pressure, PresUnit
 from .relative import RelativeAbstractParam
 from .solubility import FamousSolubilityUnit, Solubility, SolubilityUnit

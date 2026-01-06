@@ -39,7 +39,7 @@ class Viscosity(AbstractParam):
 
         if unit.is_newton():
             pass
-        if unit.is_cp():
+        elif unit.is_cp():
             magnitude = magnitude * self.__cp_coefficient
         else:
             raise ValueError("Неизвестная еденица измерения вязкости")

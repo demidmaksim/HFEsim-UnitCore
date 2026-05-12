@@ -1,6 +1,7 @@
 from .abstract import AbstractParam, AbstractUnit
 from .compressibility import Compressibility, CompressibilityUnit
 from .density import Density, DensityUnit, FamousDensityUnit
+from .heat_capacity import HeatCapacity, HeatCapacityUnit
 from .mass import FamousMassUnit, Mass, MassUnit
 from .molecular_weight import FamousMolecularWeightUnit, MolecularWeight, MolecularWeightUnit
 from .pressure import FamousPresUnit, Pressure, PresUnit
